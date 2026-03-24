@@ -8,7 +8,6 @@ use futari_dto::oauth::response::OAuthUrlResponse;
 use futari_dto::validator::query_validator::ValidatedQuery;
 use futari_errors::errors::{ErrorResponse, Errors};
 
-/// GitHub OAuth 인증 URL을 생성합니다.
 #[utoipa::path(
     get,
     path = "/v0/auth/oauth/github/authorize",

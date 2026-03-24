@@ -2,7 +2,6 @@ use serde::Deserialize;
 use utoipa::ToSchema;
 use validator::Validate;
 
-/// Google OAuth 로그인 요청
 #[derive(Debug, Clone, Deserialize, Validate, ToSchema)]
 pub struct GoogleLoginRequest {
     /// Authorization code from Google OAuth callback

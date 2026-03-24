@@ -1,8 +1,8 @@
 use axum::Json;
 use axum::extract::rejection::JsonRejection;
 use axum::extract::{FromRequest, Request};
-use serde::de::DeserializeOwned;
 use futari_errors::errors::Errors;
+use serde::de::DeserializeOwned;
 use validator::Validate;
 
 #[derive(Debug, Clone, Copy, Default)]

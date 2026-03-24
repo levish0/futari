@@ -1,24 +1,18 @@
-use sea_orm::{ActiveModelTrait, ConnectionTrait, Set};
-use serde_json::Value as JsonValue;
-use uuid::Uuid;
 use futari_constants::ModerationAction;
 use futari_entity::common::ModerationResourceType;
 use futari_entity::moderation_logs::{
     ActiveModel as ModerationLogActiveModel, Model as ModerationLogModel,
 };
 use futari_errors::errors::Errors;
+use sea_orm::{ActiveModelTrait, ConnectionTrait, Set};
+use serde_json::Value as JsonValue;
+use uuid::Uuid;
 
-/// 모더레이션 로그 레코드를 생성한다.
 ///
-/// # 역할
-/// 입력 파라미터를 `moderation_logs` 레코드로 변환해 insert 한다.
 ///
-/// # 연계
 /// - `service_start_reindex`
-/// - 기타 모더레이션 액션 서비스
 ///
 /// # Errors
-/// - insert 실패 시 DB/저장소 에러를 반환한다.
 pub async fn repository_create_moderation_log<C>(
     conn: &C,
     action: ModerationAction,

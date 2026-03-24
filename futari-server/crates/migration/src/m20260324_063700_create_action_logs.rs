@@ -35,11 +35,7 @@ impl MigrationTrait for Migration {
                     )
                     .col(ColumnDef::new(ActionLogs::ResourceId).uuid().null())
                     .col(ColumnDef::new(ActionLogs::Summary).text().not_null())
-                    .col(
-                        ColumnDef::new(ActionLogs::Metadata)
-                            .json_binary()
-                            .null(),
-                    )
+                    .col(ColumnDef::new(ActionLogs::Metadata).json_binary().null())
                     .col(
                         ColumnDef::new(ActionLogs::CreatedAt)
                             .timestamp_with_time_zone()
@@ -57,7 +53,6 @@ impl MigrationTrait for Migration {
             )
             .await?;
 
-        // 유저별 활동 로그 조회
         manager
             .create_index(
                 Index::create()
@@ -69,7 +64,6 @@ impl MigrationTrait for Migration {
             )
             .await?;
 
-        // 리소스별 조회
         manager
             .create_index(
                 Index::create()
@@ -81,7 +75,6 @@ impl MigrationTrait for Migration {
             )
             .await?;
 
-        // 액션 종류별 조회
         manager
             .create_index(
                 Index::create()

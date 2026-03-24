@@ -1,11 +1,10 @@
 use chrono::Utc;
-use sea_orm::{ColumnTrait, ConnectionTrait, EntityTrait, ExprTrait, QueryFilter};
-use uuid::Uuid;
 use futari_entity::common::Role;
 use futari_entity::user_roles::{Column, Entity};
 use futari_errors::errors::Errors;
+use sea_orm::{ColumnTrait, ConnectionTrait, EntityTrait, ExprTrait, QueryFilter};
+use uuid::Uuid;
 
-/// 사용자의 유효한 역할 목록 조회 (만료되지 않은 것만)
 pub async fn repository_find_user_roles<C>(conn: &C, user_id: Uuid) -> Result<Vec<Role>, Errors>
 where
     C: ConnectionTrait,

@@ -4,13 +4,13 @@ use crate::repository::user::{
 };
 use crate::utils::crypto::token::generate_secure_token;
 use crate::utils::redis_cache::{delete_key, get_json, get_ttl_seconds};
+use futari_errors::errors::{Errors, ServiceResult};
 use redis::aio::ConnectionManager;
 use sea_orm::{DatabaseConnection, TransactionTrait};
 use serde::{Deserialize, Serialize};
 use std::sync::LazyLock;
 use tracing::info;
 use uuid::Uuid;
-use futari_errors::errors::{Errors, ServiceResult};
 
 static RESERVE_PENDING_SIGNUP_SCRIPT: LazyLock<redis::Script> =
     LazyLock::new(|| redis::Script::new(include_str!("lua/reserve_pending_signup.lua")));
@@ -86,8 +86,11 @@ pub async fn find_pending_email_signup_by_handle(
     redis_conn: &ConnectionManager,
     handle: &str,
 ) -> ServiceResult<Option<(String, PendingEmailSignupData)>> {
-    find_pending_email_signup_by_index(redis_conn, &futari_constants::email_signup_handle_key(handle))
-        .await
+    find_pending_email_signup_by_index(
+        redis_conn,
+        &futari_constants::email_signup_handle_key(handle),
+    )
+    .await
 }
 
 pub async fn delete_pending_email_signup_indices(
@@ -133,7 +136,6 @@ async fn find_pending_email_signup_by_index(
         get_json::<PendingEmailSignupData>(redis_conn, &verification_key).await?
     else {
         // Token payload is gone (consumed by verify or expired).
-        // Don't eagerly delete the index — it will expire via its own TTL,
         // and deleting here would open a race window that lets a concurrent
         // create_user re-reserve the same email/handle.
         return Ok(None);
@@ -160,7 +162,6 @@ pub async fn service_verify_email(
 
     let user_id = complete_pending_email_signup(db, signup_data.clone()).await?;
 
-    // DB commit succeeded — now clean up Redis (best-effort).
     delete_key(redis_conn, &token_key).await.ok();
     delete_pending_email_signup_indices(redis_conn, &signup_data)
         .await

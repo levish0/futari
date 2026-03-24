@@ -1,8 +1,8 @@
 use chrono::Utc;
+use futari_entity::user_bans;
 use sea_orm::sea_query::{Alias, Expr, Query};
 use sea_orm::{ConnectionTrait, DatabaseConnection, ExprTrait, FromQueryResult};
 use uuid::Uuid;
-use futari_entity::user_bans;
 
 #[derive(Debug, FromQueryResult)]
 struct BanRow {
@@ -47,7 +47,6 @@ pub async fn run_cleanup_expired_bans(
         let ban_ids: Vec<Uuid> = rows.iter().map(|r| r.id).collect();
         affected_user_ids.extend(rows.iter().map(|r| r.user_id));
 
-        // 첫 SELECT에서 가져온 ID를 그대로 사용하여 삭제
         let delete_query = Query::delete()
             .from_table(user_bans::Entity)
             .and_where(Expr::col(user_bans::Column::Id).is_in(ban_ids))

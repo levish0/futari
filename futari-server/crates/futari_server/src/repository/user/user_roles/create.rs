@@ -1,11 +1,10 @@
 use chrono::{DateTime, Utc};
-use sea_orm::{ActiveModelTrait, ConnectionTrait, Set};
-use uuid::Uuid;
 use futari_entity::common::Role;
 use futari_entity::user_roles::{ActiveModel, Model};
 use futari_errors::errors::Errors;
+use sea_orm::{ActiveModelTrait, ConnectionTrait, Set};
+use uuid::Uuid;
 
-/// 사용자에게 역할 부여
 pub async fn repository_create_user_role<C>(
     conn: &C,
     user_id: Uuid,

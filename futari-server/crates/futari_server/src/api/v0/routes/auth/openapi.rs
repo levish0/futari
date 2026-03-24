@@ -1,4 +1,3 @@
-use utoipa::OpenApi;
 use futari_dto::auth::request::{
     ChangeEmailRequest, ChangePasswordRequest, CompleteSignupRequest, ConfirmEmailChangeRequest,
     ForgotPasswordRequest, LoginRequest, ResendVerificationEmailRequest, ResetPasswordRequest,
@@ -17,6 +16,7 @@ use futari_dto::oauth::response::OAuthPendingSignupResponse;
 use futari_dto::oauth::response::{
     OAuthConnectionListResponse, OAuthConnectionResponse, OAuthUrlResponse,
 };
+use utoipa::OpenApi;
 
 #[derive(OpenApi)]
 #[openapi(

@@ -4,11 +4,11 @@ use crate::state::AppState;
 use crate::utils::extract::extract_ip_address::extract_ip_address;
 use axum::extract::{ConnectInfo, State};
 use axum::http::HeaderMap;
-use std::net::SocketAddr;
 use futari_dto::user::request::BanUserRequest;
 use futari_dto::user::response::BanUserResponse;
 use futari_dto::validator::json_validator::ValidatedJson;
 use futari_errors::errors::{ErrorResponse, Errors};
+use std::net::SocketAddr;
 
 #[utoipa::path(
     post,

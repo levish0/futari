@@ -1,12 +1,11 @@
-use sea_orm::{ColumnTrait, ConnectionTrait, EntityTrait, Order, QueryFilter, QueryOrder};
-use uuid::Uuid;
 use futari_entity::user_oauth_connections::{
     Column as OAuthConnectionsColumn, Entity as OAuthConnectionsEntity,
     Model as OAuthConnectionModel,
 };
 use futari_errors::errors::Errors;
+use sea_orm::{ColumnTrait, ConnectionTrait, EntityTrait, Order, QueryFilter, QueryOrder};
+use uuid::Uuid;
 
-/// 사용자의 모든 OAuth 연결을 조회합니다.
 pub async fn repository_list_oauth_connections_by_user_id<C>(
     conn: &C,
     user_id: Uuid,

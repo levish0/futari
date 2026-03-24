@@ -1,5 +1,5 @@
-use utoipa::OpenApi;
 use futari_dto::action_logs::{ActionLogListResponse, ActionLogResponse, GetActionLogsRequest};
+use utoipa::OpenApi;
 
 use super::recent_changes::__path_get_action_logs;
 

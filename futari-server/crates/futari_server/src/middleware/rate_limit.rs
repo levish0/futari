@@ -10,13 +10,13 @@ use axum::{
     middleware::Next,
     response::{IntoResponse, Response},
 };
+use futari_errors::errors::Errors;
 use redis::aio::ConnectionManager;
 use std::net::SocketAddr;
 use std::sync::LazyLock;
 use std::time::{SystemTime, UNIX_EPOCH};
 use tracing::{debug, warn};
 use uuid::Uuid;
-use futari_errors::errors::Errors;
 
 /// Rate limit configuration
 #[derive(Debug, Clone, Copy)]

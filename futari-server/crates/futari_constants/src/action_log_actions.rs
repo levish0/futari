@@ -3,12 +3,11 @@ use std::fmt;
 use std::str::FromStr;
 use utoipa::ToSchema;
 
-/// Action Log Action enum (action_logs.action 필드에 저장됨)
-/// 포맷: "{resource}:{operation}"
+/// Action log actions stored in `action_logs.action`.
+/// Format: `{resource}:{operation}`.
 ///
-/// Moderation Actions vs Action Log Actions:
-/// - Moderation Actions: 관리자/중재자 행동 로깅 (ban, delete, hide 등)
-/// - Action Log Actions: 일반 사용자 활동 로깅 (create, edit 등)
+/// Moderation actions track moderator or administrator operations, while
+/// action log actions track regular user activity such as create or edit.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, ToSchema)]
 pub enum ActionLogAction {
     // ==================== Post Actions (3) ====================
@@ -28,7 +27,7 @@ pub enum ActionLogAction {
 }
 
 impl ActionLogAction {
-    /// Convert to database string value
+    /// Convert to the database string value.
     pub fn as_str(&self) -> &'static str {
         match self {
             // Post
@@ -67,12 +66,12 @@ impl FromStr for ActionLogAction {
     }
 }
 
-/// Convert ActionLogAction to String for DB storage
+/// Convert an action log action to its stored string form.
 pub fn action_log_action_to_string(action: ActionLogAction) -> String {
     action.as_str().to_string()
 }
 
-/// Convert String from DB to ActionLogAction
+/// Parse an action log action from its stored string form.
 pub fn string_to_action_log_action(s: &str) -> Option<ActionLogAction> {
     s.parse().ok()
 }

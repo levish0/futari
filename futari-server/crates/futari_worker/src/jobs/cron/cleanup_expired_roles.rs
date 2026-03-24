@@ -1,8 +1,8 @@
 use chrono::Utc;
+use futari_entity::user_roles;
 use sea_orm::sea_query::{Alias, Expr, Query};
 use sea_orm::{ConnectionTrait, DatabaseConnection, ExprTrait, FromQueryResult};
 use uuid::Uuid;
-use futari_entity::user_roles;
 
 #[derive(Debug, FromQueryResult)]
 struct RoleRow {
@@ -47,7 +47,6 @@ pub async fn run_cleanup_expired_roles(
         let role_ids: Vec<Uuid> = rows.iter().map(|r| r.id).collect();
         affected_user_ids.extend(rows.iter().map(|r| r.user_id));
 
-        // 첫 SELECT에서 가져온 ID를 그대로 사용하여 삭제
         let delete_query = Query::delete()
             .from_table(user_roles::Entity)
             .and_where(Expr::col(user_roles::Column::Id).is_in(role_ids))

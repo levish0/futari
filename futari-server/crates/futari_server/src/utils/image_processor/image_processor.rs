@@ -1,6 +1,6 @@
+use futari_errors::errors::Errors;
 use image::{DynamicImage, GenericImageView, ImageFormat, ImageReader, codecs::gif::GifDecoder};
 use std::io::Cursor;
-use futari_errors::errors::Errors;
 
 pub struct ImageProcessor;
 

@@ -1,13 +1,14 @@
-
 mod email;
+mod index;
 
 // Re-export all functions for backwards compatibility
 pub use email::*;
+pub use index::*;
 
 use crate::state::WorkerClient;
+use futari_errors::errors::Errors;
 use serde::Serialize;
 use tracing::error;
-use futari_errors::errors::Errors;
 
 /// Publish a job to NATS JetStream
 pub async fn publish_job<T: Serialize>(

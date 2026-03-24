@@ -54,7 +54,6 @@ impl MigrationTrait for Migration {
             )
             .await?;
 
-        // UNIQUE(user_id, role) — 한 유저에 같은 역할 중복 부여 방지
         manager
             .create_index(
                 Index::create()

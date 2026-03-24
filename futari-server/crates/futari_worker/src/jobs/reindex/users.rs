@@ -7,9 +7,9 @@ use crate::nats::consumer::NatsConsumer;
 use crate::nats::publisher::publish_job;
 use crate::nats::streams::{REINDEX_USERS_CONSUMER, REINDEX_USERS_STREAM, REINDEX_USERS_SUBJECT};
 use crate::{DbPool, SearchClient};
+use futari_entity::users;
 use sea_orm::{ColumnTrait, EntityTrait, PaginatorTrait, QueryFilter, QueryOrder, QuerySelect};
 use uuid::Uuid;
-use futari_entity::users;
 
 /// Handle a batch reindex job for users
 async fn handle_reindex_users(

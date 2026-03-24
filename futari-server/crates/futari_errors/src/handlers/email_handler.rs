@@ -3,9 +3,7 @@ use crate::protocol::email::*;
 use axum::http::StatusCode;
 use tracing::debug;
 
-/// 이메일 관련 에러 로깅 처리
 pub fn log_error(error: &Errors) {
-    // 비즈니스 로직 에러 - debug! 레벨 (클라이언트 실수)
     if let Errors::EmailAlreadyVerified = error {
         debug!(error = ?error, "Client error");
     }
@@ -18,6 +16,6 @@ pub fn map_response(error: &Errors) -> Option<(StatusCode, &'static str, Option<
             Some((StatusCode::BAD_REQUEST, EMAIL_ALREADY_VERIFIED, None))
         }
 
-        _ => None, // 다른 도메인의 에러는 None 반환
+        _ => None,
     }
 }

@@ -1,12 +1,11 @@
-use sea_orm::{ColumnTrait, ConnectionTrait, EntityTrait, QueryFilter};
-use uuid::Uuid;
 use futari_entity::common::OAuthProvider;
 use futari_entity::user_oauth_connections::{
     Column as OAuthConnectionsColumn, Entity as OAuthConnectionsEntity,
 };
 use futari_errors::errors::Errors;
+use sea_orm::{ColumnTrait, ConnectionTrait, EntityTrait, QueryFilter};
+use uuid::Uuid;
 
-/// 특정 사용자의 특정 provider OAuth 연결을 삭제합니다.
 pub async fn repository_delete_oauth_connection<C>(
     conn: &C,
     user_id: Uuid,

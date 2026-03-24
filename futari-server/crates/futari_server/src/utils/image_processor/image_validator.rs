@@ -1,9 +1,9 @@
 use crate::utils::image_processor::image_processor::ImageProcessor;
 use blake3;
+use futari_errors::errors::Errors;
 use image::{ImageFormat, ImageReader};
 use infer;
 use std::io::Cursor;
-use futari_errors::errors::Errors;
 
 /// Maximum image size before optimization (10MB)
 pub const MAX_IMAGE_SIZE: usize = 10 * 1024 * 1024;

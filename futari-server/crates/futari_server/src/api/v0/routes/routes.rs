@@ -8,7 +8,6 @@ use super::user_preferences::routes::user_preferences_routes as UserPreferencesR
 use crate::state::AppState;
 use axum::Router;
 
-/// v0 API 라우터
 pub fn v0_routes(state: AppState) -> Router<AppState> {
     Router::new()
         .merge(UserRoutes())

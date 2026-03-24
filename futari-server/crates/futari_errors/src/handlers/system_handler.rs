@@ -3,10 +3,8 @@ use crate::protocol::system::*;
 use axum::http::StatusCode;
 use tracing::{error, warn};
 
-/// 시스템 관련 에러 로깅 처리
 pub fn log_error(err: &Errors) {
     match err {
-        // 시스템 심각도 에러 - error! 레벨
         Errors::SysInternalError(_)
         | Errors::DatabaseError(_)
         | Errors::TransactionError(_)
@@ -15,7 +13,6 @@ pub fn log_error(err: &Errors) {
             error!(error = ?err, "System error occurred");
         }
 
-        // 리소스 찾을 수 없음 - warn! 레벨
         Errors::NotFound(_) => {
             warn!(error = ?err, "Resource not found");
         }
@@ -54,6 +51,6 @@ pub fn map_response(error: &Errors) -> Option<(StatusCode, &'static str, Option<
             Some(msg.clone()),
         )),
 
-        _ => None, // 다른 도메인의 에러는 None 반환
+        _ => None,
     }
 }

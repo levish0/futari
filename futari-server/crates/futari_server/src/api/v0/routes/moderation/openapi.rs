@@ -1,7 +1,7 @@
-use utoipa::OpenApi;
 use futari_dto::moderation::{
     ListModerationLogsRequest, ListModerationLogsResponse, ModerationLogListItem,
 };
+use utoipa::OpenApi;
 
 #[derive(OpenApi)]
 #[openapi(

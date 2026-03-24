@@ -29,7 +29,7 @@ impl MigrationTrait for Migration {
                         ColumnDef::new(UserBans::ExpiresAt)
                             .timestamp_with_time_zone()
                             .null(),
-                    ) // NULL = 영구 차단
+                    )
                     .col(
                         ColumnDef::new(UserBans::CreatedAt)
                             .timestamp_with_time_zone()
@@ -47,7 +47,6 @@ impl MigrationTrait for Migration {
             )
             .await?;
 
-        // 만료 시간 조회 (임시 차단 해제용)
         manager
             .create_index(
                 Index::create()

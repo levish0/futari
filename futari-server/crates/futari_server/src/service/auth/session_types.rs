@@ -22,10 +22,7 @@ pub struct Session {
 }
 
 impl Session {
-    /// 기본 세션 객체를 생성한다.
-    ///
-    /// # 역할
-    /// 현재 시각 기준으로 세션 생성시각, sliding 만료시각, 최대 만료시각을 계산한다.
+    /// Build a new session with sliding and max-lifetime expirations.
     pub fn new(user_id: String, sliding_ttl_hours: i64, max_lifetime_hours: i64) -> Self {
         let now = Utc::now();
         let expires_at = now + Duration::hours(sliding_ttl_hours);
@@ -42,10 +39,7 @@ impl Session {
         }
     }
 
-    /// 세션에 클라이언트 식별 정보를 주입한다.
-    ///
-    /// # 역할
-    /// 사용자 에이전트와 IP 정보를 세션 payload에 저장해 추적/보안 판단에 활용한다.
+    /// Attach optional client metadata to the session payload.
     pub fn with_client_info(
         mut self,
         user_agent: Option<String>,
@@ -56,12 +50,10 @@ impl Session {
         self
     }
 
-    /// 세션을 연장할 수 있는지 확인 (최대 수명 체크)
     pub fn can_refresh(&self) -> bool {
         Utc::now() < self.max_expires_at
     }
 
-    /// 세션 연장이 필요한지 확인 (TTL 임계값 체크)
     pub fn needs_refresh(&self, threshold_percent: u8, sliding_ttl_hours: i64) -> bool {
         let now = Utc::now();
         let remaining = (self.expires_at - now).num_seconds();

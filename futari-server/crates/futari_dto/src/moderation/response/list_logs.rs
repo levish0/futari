@@ -1,11 +1,11 @@
 use axum::{Json, response::IntoResponse};
 use chrono::{DateTime, Utc};
+use futari_entity::common::ModerationResourceType;
+use futari_entity::moderation_logs::Model as ModerationLogModel;
 use serde::Serialize;
 use serde_json::Value as JsonValue;
 use utoipa::ToSchema;
 use uuid::Uuid;
-use futari_entity::common::ModerationResourceType;
-use futari_entity::moderation_logs::Model as ModerationLogModel;
 
 #[derive(Debug, Serialize, ToSchema)]
 /// Response payload for moderation log list item.

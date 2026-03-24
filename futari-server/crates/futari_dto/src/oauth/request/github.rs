@@ -2,7 +2,6 @@ use serde::Deserialize;
 use utoipa::ToSchema;
 use validator::Validate;
 
-/// GitHub OAuth 로그인 요청
 #[derive(Debug, Clone, Deserialize, Validate, ToSchema)]
 pub struct GithubLoginRequest {
     /// Authorization code from GitHub OAuth callback

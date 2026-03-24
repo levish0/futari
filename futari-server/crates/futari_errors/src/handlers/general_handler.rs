@@ -4,15 +4,12 @@ use crate::protocol::post::*;
 use axum::http::StatusCode;
 use tracing::{debug, warn};
 
-/// 일반 에러 로깅 처리
 pub fn log_error(error: &Errors) {
     match error {
-        // 리소스 찾을 수 없음 - warn! 레벨
         Errors::PostNotFound => {
             warn!(error = ?error, "Resource not found");
         }
 
-        // 비즈니스 로직 에러 - debug! 레벨 (클라이언트 실수)
         Errors::ForbiddenError(_)
         | Errors::BadRequestError(_)
         | Errors::ValidationError(_)
@@ -43,6 +40,6 @@ pub fn map_response(error: &Errors) -> Option<(StatusCode, &'static str, Option<
         )),
         Errors::InvalidIpAddress => Some((StatusCode::BAD_REQUEST, INVALID_IP_ADDRESS, None)),
 
-        _ => None, // 다른 도메인의 에러는 None 반환
+        _ => None,
     }
 }

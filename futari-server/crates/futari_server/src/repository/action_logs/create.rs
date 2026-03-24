@@ -1,12 +1,11 @@
-use sea_orm::{ActiveModelTrait, ConnectionTrait, Set};
-use serde_json::Value as JsonValue;
-use uuid::Uuid;
 use futari_constants::ActionLogAction;
 use futari_entity::action_logs::{ActiveModel as ActionLogActiveModel, Model as ActionLogModel};
 use futari_entity::common::ActionResourceType;
 use futari_errors::errors::Errors;
+use sea_orm::{ActiveModelTrait, ConnectionTrait, Set};
+use serde_json::Value as JsonValue;
+use uuid::Uuid;
 
-/// 액션 로그 레코드를 생성한다.
 pub async fn repository_create_action_log<C>(
     conn: &C,
     action: ActionLogAction,

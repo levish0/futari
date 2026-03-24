@@ -1,7 +1,7 @@
 use axum::http::{Method, header::HeaderName};
+use futari_config::ServerConfig;
 use tower_http::cors::{AllowHeaders, AllowOrigin, CorsLayer};
 use tracing::{info, warn};
-use futari_config::ServerConfig;
 
 pub fn cors_layer() -> CorsLayer {
     let config = ServerConfig::get();

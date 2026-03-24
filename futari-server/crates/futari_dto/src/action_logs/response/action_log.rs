@@ -1,10 +1,10 @@
 use chrono::{DateTime, Utc};
+use futari_entity::action_logs::Model as ActionLogModel;
+use futari_entity::common::ActionResourceType;
 use serde::{Deserialize, Serialize};
 use serde_json::Value as JsonValue;
 use utoipa::ToSchema;
 use uuid::Uuid;
-use futari_entity::action_logs::Model as ActionLogModel;
-use futari_entity::common::ActionResourceType;
 
 #[derive(Debug, Clone, Serialize, Deserialize, ToSchema)]
 /// Response payload for action log response.

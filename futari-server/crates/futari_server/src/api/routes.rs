@@ -3,10 +3,9 @@ use super::openapi::ApiDoc;
 use super::v0::routes::routes::v0_routes;
 use crate::state::AppState;
 use axum::Router;
-use utoipa_swagger_ui::SwaggerUi;
 use futari_errors::errors::handler_404;
+use utoipa_swagger_ui::SwaggerUi;
 
-/// 최상위 API 라우터 (health + versioned APIs)
 pub fn api_routes(state: AppState) -> Router<AppState> {
     let mut router = Router::new();
 

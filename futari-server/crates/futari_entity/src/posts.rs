@@ -15,10 +15,8 @@ pub struct Model {
     pub content: Option<String>,
     #[sea_orm(nullable)]
     pub media_urls: Option<Vec<String>>,
-    /// 리포스트(RT) 원본
     #[sea_orm(nullable)]
     pub repost_of_id: Option<Uuid>,
-    /// 인용 리포스트(QRT) 원본
     #[sea_orm(nullable)]
     pub quote_of_id: Option<Uuid>,
     #[sea_orm(not_null)]

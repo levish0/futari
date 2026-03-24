@@ -1,10 +1,10 @@
 use crate::pagination::CursorDirection;
 use chrono::{DateTime, Utc};
+use futari_constants::ActionLogAction;
+use futari_entity::common::ActionResourceType;
 use serde::Deserialize;
 use utoipa::{IntoParams, ToSchema};
 use uuid::Uuid;
-use futari_constants::ActionLogAction;
-use futari_entity::common::ActionResourceType;
 use validator::Validate;
 
 #[derive(Debug, Deserialize, Validate, ToSchema, IntoParams)]

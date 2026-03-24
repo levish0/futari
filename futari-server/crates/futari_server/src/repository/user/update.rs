@@ -1,14 +1,12 @@
+use futari_entity::users::{
+    ActiveModel as UserActiveModel, Entity as UserEntity, Model as UserModel,
+};
+use futari_errors::errors::Errors;
 use sea_orm::prelude::DateTimeUtc;
 use sea_orm::{ActiveModelTrait, ConnectionTrait, EntityTrait, IntoActiveModel, Set};
 use uuid::Uuid;
-use futari_entity::users::{ActiveModel as UserActiveModel, Entity as UserEntity, Model as UserModel};
-use futari_errors::errors::Errors;
 
-/// 사용자 업데이트 파라미터
-/// - `Option<T>`: None = 변경 안 함, Some(value) = 값으로 변경
-/// - `Option<Option<T>>`: None = 변경 안 함, Some(None) = NULL로 설정, Some(Some(value)) = 값으로 설정
 ///
-/// # 사용 예시
 /// ```ignore
 /// repository_update_user(conn, user_id, UserUpdateParams {
 ///     totp_secret: Some(Some(secret)),
@@ -29,7 +27,6 @@ pub struct UserUpdateParams {
     pub totp_backup_codes: Option<Option<Vec<String>>>,
 }
 
-/// 범용 사용자 정보 업데이트
 pub async fn repository_update_user<C>(
     conn: &C,
     user_id: Uuid,

@@ -1,11 +1,4 @@
 use anyhow::Result;
-use futures::FutureExt;
-use std::any::Any;
-use std::panic::AssertUnwindSafe;
-use std::sync::Arc;
-use std::time::Duration;
-use tokio::task::JoinSet;
-use tracing::{error, info};
 use futari_worker::clients;
 use futari_worker::config::WorkerConfig;
 use futari_worker::connection;
@@ -13,6 +6,13 @@ use futari_worker::jobs::{self, WorkerContext};
 use futari_worker::nats::streams::initialize_all_streams;
 use futari_worker::utils;
 use futari_worker::{CacheClient, DbPool};
+use futures::FutureExt;
+use std::any::Any;
+use std::panic::AssertUnwindSafe;
+use std::sync::Arc;
+use std::time::Duration;
+use tokio::task::JoinSet;
+use tracing::{error, info};
 
 const CONSUMER_RESTART_DELAY: Duration = Duration::from_secs(1);
 
@@ -139,12 +139,8 @@ async fn main() -> Result<()> {
     info!("Job consumers started");
 
     info!("Starting cron scheduler...");
-    let _cron_scheduler = jobs::cron::start_scheduler(
-        ctx.db_pool.clone(),
-        ctx.cache_client.clone(),
-        config,
-    )
-    .await?;
+    let _cron_scheduler =
+        jobs::cron::start_scheduler(ctx.db_pool.clone(), ctx.cache_client.clone(), config).await?;
 
     info!("All workers running");
 

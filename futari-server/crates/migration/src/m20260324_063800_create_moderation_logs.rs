@@ -57,7 +57,6 @@ impl MigrationTrait for Migration {
             )
             .await?;
 
-        // 리소스별 조회
         manager
             .create_index(
                 Index::create()
@@ -69,7 +68,6 @@ impl MigrationTrait for Migration {
             )
             .await?;
 
-        // 모더레이터별 조회
         manager
             .create_index(
                 Index::create()
@@ -81,7 +79,6 @@ impl MigrationTrait for Migration {
             )
             .await?;
 
-        // 액션 종류별 조회
         manager
             .create_index(
                 Index::create()

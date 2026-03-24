@@ -10,16 +10,13 @@ use axum::{
     response::Response,
 };
 use axum_extra::{TypedHeader, headers::UserAgent};
-use std::net::SocketAddr;
 use futari_dto::oauth::request::github::GithubLoginRequest;
 use futari_dto::oauth::response::{OAuthPendingSignupResponse, OAuthSignInResponse};
 use futari_dto::validator::json_validator::ValidatedJson;
 use futari_errors::errors::{ErrorResponse, Errors};
+use std::net::SocketAddr;
 
-/// GitHub OAuth 로그인을 처리합니다.
 ///
-/// - 기존 사용자: 204 No Content + Set-Cookie
-/// - 신규 사용자: 200 OK + pending signup 정보 (complete-signup 필요)
 #[utoipa::path(
     post,
     path = "/v0/auth/oauth/github/login",
@@ -44,7 +41,6 @@ pub async fn auth_github_login(
     let user_agent_str = extract_user_agent(user_agent);
     let ip_address = extract_ip_address(&headers, addr);
 
-    // GitHub OAuth 로그인 처리
     let result = service_github_sign_in(
         &state.db,
         &state.redis_session,
@@ -57,6 +53,5 @@ pub async fn auth_github_login(
     )
     .await?;
 
-    // SignInResult를 HTTP 응답으로 변환
     OAuthSignInResponse::from_result(result).into_response_result()
 }

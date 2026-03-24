@@ -16,7 +16,6 @@ pub fn create_logout_response() -> Result<Response, Errors> {
         SameSite::Lax
     };
 
-    // 세션 쿠키 삭제 (만료 시간을 과거로 설정)
     let mut cookie_builder = Cookie::build(("session_id", ""))
         .http_only(true)
         .secure(true)

@@ -9,7 +9,6 @@ use futari_dto::oauth::request::link::GithubLinkRequest;
 use futari_dto::validator::json_validator::ValidatedJson;
 use futari_errors::errors::{ErrorResponse, Errors};
 
-/// GitHub OAuth를 현재 계정에 연결합니다.
 #[utoipa::path(
     post,
     path = "/v0/auth/oauth/github/link",

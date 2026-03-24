@@ -5,7 +5,6 @@ use axum::extract::State;
 use futari_dto::oauth::response::OAuthConnectionListResponse;
 use futari_errors::errors::{ErrorResponse, Errors};
 
-/// 현재 사용자의 OAuth 연결 목록을 조회합니다.
 #[utoipa::path(
     get,
     path = "/v0/auth/oauth/connections",

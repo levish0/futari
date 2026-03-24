@@ -1,9 +1,9 @@
 use super::publish_job;
 use crate::state::WorkerClient;
-use tracing::info;
 use futari_errors::errors::Errors;
 use futari_worker::jobs::email::{EmailTemplate, SendEmailJob};
 use futari_worker::nats::streams::EMAIL_SUBJECT;
+use tracing::info;
 
 /// Push a verification email job to the worker queue
 pub async fn send_verification_email(

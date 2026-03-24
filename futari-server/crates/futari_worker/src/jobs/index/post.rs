@@ -1,12 +1,12 @@
+use crate::DbPool;
 use crate::jobs::WorkerContext;
 use crate::nats::consumer::NatsConsumer;
 use crate::nats::streams::{INDEX_POST_CONSUMER, INDEX_POST_STREAM};
-use crate::DbPool;
+use futari_entity::posts;
 use sea_orm::EntityTrait;
 use serde::{Deserialize, Serialize};
 use serde_json::{Value as JsonValue, json};
 use uuid::Uuid;
-use futari_entity::posts;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct IndexPostJob {
@@ -37,7 +37,14 @@ fn post_index_settings() -> meilisearch_sdk::settings::Settings {
         .with_searchable_attributes(["content"])
         .with_displayed_attributes(["id", "user_id", "content", "created_at"])
         .with_sortable_attributes(["created_at"])
-        .with_ranking_rules(["words", "typo", "proximity", "attribute", "sort", "exactness"])
+        .with_ranking_rules([
+            "words",
+            "typo",
+            "proximity",
+            "attribute",
+            "sort",
+            "exactness",
+        ])
 }
 
 async fn handle_index_post(

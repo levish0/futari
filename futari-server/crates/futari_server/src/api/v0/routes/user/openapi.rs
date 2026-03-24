@@ -1,12 +1,11 @@
-use utoipa::OpenApi;
 use futari_dto::user::UploadUserImageRequest;
 use futari_dto::user::{
     BanUserRequest, BanUserResponse, CheckHandleAvailablePath, CheckHandleAvailableResponse,
-    GetUserProfileByIdRequest, GetUserProfileRequest, GetUserRevisionContributionsRequest,
-    GetUserRevisionContributionsResponse, GrantRoleRequest, GrantRoleResponse, PublicUserProfile,
-    RevokeRoleRequest, RevokeRoleResponse, UnbanUserRequest, UnbanUserResponse,
-    UpdateMyProfileRequest, UploadUserImageResponse, UserResponse, UserRevisionContributionItem,
+    GetUserProfileByIdRequest, GetUserProfileRequest, GrantRoleRequest, GrantRoleResponse,
+    PublicUserProfile, RevokeRoleRequest, RevokeRoleResponse, UnbanUserRequest, UnbanUserResponse,
+    UpdateMyProfileRequest, UploadUserImageResponse, UserResponse,
 };
+use utoipa::OpenApi;
 
 #[derive(OpenApi)]
 #[openapi(
@@ -20,7 +19,6 @@ use futari_dto::user::{
         super::profile::delete_banner_image::delete_banner_image,
         super::public::get_user_profile::get_user_profile,
         super::public::get_user_profile_by_id::get_user_profile_by_id,
-        super::public::get_revision_contributions::get_revision_contributions,
         super::account::check_handle_available::check_handle_available,
         super::management::ban_user::ban_user,
         super::management::unban_user::unban_user,
@@ -36,9 +34,6 @@ use futari_dto::user::{
             GetUserProfileRequest,
             GetUserProfileByIdRequest,
             PublicUserProfile,
-            GetUserRevisionContributionsRequest,
-            GetUserRevisionContributionsResponse,
-            UserRevisionContributionItem,
             CheckHandleAvailablePath,
             CheckHandleAvailableResponse,
             BanUserRequest,

@@ -13,7 +13,6 @@ pub struct Model {
     pub post_id: Uuid,
     #[sea_orm(not_null)]
     pub user_id: Uuid,
-    /// 대댓글: 부모 댓글 참조
     #[sea_orm(nullable)]
     pub parent_comment_id: Option<Uuid>,
     #[sea_orm(column_type = "Text", not_null)]

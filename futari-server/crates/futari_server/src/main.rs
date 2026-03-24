@@ -1,20 +1,5 @@
-
 use axum::error_handling::HandleErrorLayer;
 use axum::{Router, extract::DefaultBodyLimit, middleware};
-use std::net::SocketAddr;
-use std::process::ExitCode;
-use std::sync::Arc;
-use std::time::Duration;
-use tokio::sync::broadcast;
-use tower::ServiceBuilder;
-use tower::buffer::BufferLayer;
-use tower::limit::ConcurrencyLimitLayer;
-use tower::timeout::TimeoutLayer;
-use tower_cookies::CookieManagerLayer;
-use tower_http::LatencyUnit;
-use tower_http::request_id::{MakeRequestUuid, PropagateRequestIdLayer, SetRequestIdLayer};
-use tower_http::trace::TraceLayer;
-use tracing::{Level, error};
 use futari_config::ServerConfig;
 use futari_dto::action_logs::ActionLogResponse;
 use futari_server::api::routes::api_routes;
@@ -29,6 +14,20 @@ use futari_server::middleware::stability::handle_tower_error;
 use futari_server::middleware::trace_layer_config::make_span_with_request_id;
 use futari_server::state::AppState;
 use futari_server::utils::logger::init_tracing;
+use std::net::SocketAddr;
+use std::process::ExitCode;
+use std::sync::Arc;
+use std::time::Duration;
+use tokio::sync::broadcast;
+use tower::ServiceBuilder;
+use tower::buffer::BufferLayer;
+use tower::limit::ConcurrencyLimitLayer;
+use tower::timeout::TimeoutLayer;
+use tower_cookies::CookieManagerLayer;
+use tower_http::LatencyUnit;
+use tower_http::request_id::{MakeRequestUuid, PropagateRequestIdLayer, SetRequestIdLayer};
+use tower_http::trace::TraceLayer;
+use tracing::{Level, error};
 
 pub async fn run_server() -> anyhow::Result<()> {
     let db = establish_connection().await?;
@@ -41,22 +40,22 @@ pub async fn run_server() -> anyhow::Result<()> {
         &ServerConfig::get().redis_session_port,
         "Session",
     )
-        .await
-        .map_err(|e| {
-            error!("Failed to establish redis session connection: {}", e);
-            anyhow::anyhow!("Redis session connection failed: {}", e)
-        })?;
+    .await
+    .map_err(|e| {
+        error!("Failed to establish redis session connection: {}", e);
+        anyhow::anyhow!("Redis session connection failed: {}", e)
+    })?;
 
     let redis_cache = establish_redis_connection(
         &ServerConfig::get().redis_cache_host,
         &ServerConfig::get().redis_cache_port,
         "Cache",
     )
-        .await
-        .map_err(|e| {
-            error!("Failed to establish redis cache connection: {}", e);
-            anyhow::anyhow!("Redis cache connection failed: {}", e)
-        })?;
+    .await
+    .map_err(|e| {
+        error!("Failed to establish redis cache connection: {}", e);
+        anyhow::anyhow!("Redis cache connection failed: {}", e)
+    })?;
 
     // Connect to NATS and create JetStream context
     let nats_client = async_nats::connect(&ServerConfig::get().nats_url)
@@ -146,14 +145,13 @@ pub async fn run_server() -> anyhow::Result<()> {
         listener,
         app.into_make_service_with_connect_info::<SocketAddr>(),
     )
-        .await?;
+    .await?;
     Ok(())
 }
 
 #[tokio::main]
 async fn main() -> ExitCode {
     dotenvy::dotenv().ok();
-    // tracing 초기화
     init_tracing();
 
     match run_server().await {

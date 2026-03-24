@@ -3,10 +3,8 @@ use crate::protocol::worker::*;
 use axum::http::StatusCode;
 use tracing::warn;
 
-/// Worker Service 관련 에러 로깅 처리
 pub fn log_error(error: &Errors) {
     match error {
-        // Worker Service 에러 - warn! 레벨 (외부 서비스 관련)
         Errors::WorkerServiceConnectionFailed
         | Errors::WorkerServiceResponseInvalid
         | Errors::VerificationEmailSendFailed
@@ -40,6 +38,6 @@ pub fn map_response(error: &Errors) -> Option<(StatusCode, &'static str, Option<
             None,
         )),
 
-        _ => None, // 다른 도메인의 에러는 None 반환
+        _ => None,
     }
 }

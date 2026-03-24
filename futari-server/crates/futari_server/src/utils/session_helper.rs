@@ -1,18 +1,13 @@
 use crate::service::auth::session_types::SessionContext;
+use futari_errors::errors::Errors;
 use sea_orm::prelude::IpNetwork;
 use uuid::Uuid;
-use futari_errors::errors::Errors;
 
-/// SessionContext에서 user_id와 IP를 추출
 ///
 /// # Returns
-/// - 로그인 사용자: `(Some(user_id), Some(ip_network))`
-/// - 익명 사용자: `(None, Some(ip_network))`
 ///
-/// IP는 항상 기록됨 (다중 계정 탐지, 차단 회피 추적용)
 ///
 /// # Errors
-/// - `Errors::InvalidIpAddress` - IP 주소 파싱 실패 시
 pub fn extract_user_or_ip(
     session: Option<&SessionContext>,
     ip_address: &str,

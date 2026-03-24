@@ -2,11 +2,11 @@ use crate::service::eventstream::service_stream_actions;
 use crate::state::AppState;
 use axum::extract::State;
 use axum::response::sse::{Event, KeepAlive, Sse};
+use futari_dto::action_logs::StreamActionsQuery;
+use futari_dto::validator::query_validator::ValidatedQuery;
 use futures::Stream;
 use std::convert::Infallible;
 use std::time::Duration;
-use futari_dto::action_logs::StreamActionsQuery;
-use futari_dto::validator::query_validator::ValidatedQuery;
 
 #[utoipa::path(
     get,

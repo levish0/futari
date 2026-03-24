@@ -22,7 +22,6 @@ impl MigrationTrait for Migration {
                     )
                     .col(ColumnDef::new(Comments::PostId).uuid().not_null())
                     .col(ColumnDef::new(Comments::UserId).uuid().not_null())
-                    // 대댓글 지원
                     .col(ColumnDef::new(Comments::ParentCommentId).uuid().null())
                     .col(ColumnDef::new(Comments::Content).text().not_null())
                     .col(
@@ -62,7 +61,6 @@ impl MigrationTrait for Migration {
             )
             .await?;
 
-        // 포스트별 댓글 조회 (시간순)
         // Supports: WHERE post_id = ? ORDER BY id ASC
         manager
             .create_index(
@@ -75,7 +73,6 @@ impl MigrationTrait for Migration {
             )
             .await?;
 
-        // 유저별 댓글 조회
         manager
             .create_index(
                 Index::create()
@@ -86,7 +83,6 @@ impl MigrationTrait for Migration {
             )
             .await?;
 
-        // 대댓글 조회
         manager
             .create_index(
                 Index::create()

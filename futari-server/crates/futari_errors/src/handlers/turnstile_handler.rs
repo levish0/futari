@@ -3,17 +3,14 @@ use crate::protocol::turnstile::*;
 use axum::http::StatusCode;
 use tracing::{debug, warn};
 
-/// Turnstile 관련 에러 로깅 처리
 pub fn log_error(error: &Errors) {
     match error {
-        // 클라이언트 에러 - debug! 레벨
         Errors::TurnstileTokenMissing => {
             debug!("Client error: missing turnstile token");
         }
         Errors::TurnstileVerificationFailed => {
             debug!("Client error: turnstile verification failed");
         }
-        // 서비스 에러 - warn! 레벨
         Errors::TurnstileServiceError => {
             warn!("Turnstile service error: failed to call Cloudflare API");
         }

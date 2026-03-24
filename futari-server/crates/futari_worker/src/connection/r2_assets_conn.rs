@@ -98,24 +98,19 @@ impl R2AssetsClient {
             .await
         {
             Ok(_) => Ok(true),
-            Err(err) => {
-                // SdkError를 사용하여 더 정확한 에러 처리
-                match &err {
-                    SdkError::ServiceError(service_err) => {
-                        // 404 Not Found 에러인지 확인
-                        if service_err.err().is_not_found() {
-                            Ok(false)
-                        } else {
-                            Err(Box::new(err))
-                        }
+            Err(err) => match &err {
+                SdkError::ServiceError(service_err) => {
+                    if service_err.err().is_not_found() {
+                        Ok(false)
+                    } else {
+                        Err(Box::new(err))
                     }
-                    _ => Err(Box::new(err)),
                 }
-            }
+                _ => Err(Box::new(err)),
+            },
         }
     }
 
-    // 추가: 스트림으로 업로드 (큰 파일용)
     /// Helper function for upload file.
     pub async fn upload_file(
         &self,

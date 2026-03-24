@@ -2335,7 +2335,7 @@ checksum = "e6d5a32815ae3f33302d95fdcb2ce17862f8c65363dcfd29360480ba1001fc9c"
 
 [[package]]
 name = "futari_config"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "axum",
  "dotenvy",
@@ -2344,7 +2344,7 @@ dependencies = [
 
 [[package]]
 name = "futari_constants"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "chrono",
  "serde",
@@ -2355,7 +2355,7 @@ dependencies = [
 
 [[package]]
 name = "futari_dto"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "axum",
  "axum-extra",
@@ -2376,7 +2376,7 @@ dependencies = [
 
 [[package]]
 name = "futari_entity"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "sea-orm",
  "serde",
@@ -2386,7 +2386,7 @@ dependencies = [
 
 [[package]]
 name = "futari_errors"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "axum",
  "futari_config",
@@ -2398,7 +2398,7 @@ dependencies = [
 
 [[package]]
 name = "futari_server"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "anyhow",
  "argon2",
@@ -2447,7 +2447,7 @@ dependencies = [
 
 [[package]]
 name = "futari_worker"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "anyhow",
  "async-nats",

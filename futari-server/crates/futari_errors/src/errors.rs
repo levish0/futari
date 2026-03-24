@@ -1,18 +1,16 @@
 use crate::handlers::{
-    email_handler, eventstream_handler, file_handler,
-    general_handler, meilisearch_handler, oauth_handler, password_handler,
-   rate_limit_handler, report_handler, session_handler, system_handler,
-    token_handler, totp_handler, turnstile_handler, user_handler,
-    worker_handler,
+    email_handler, eventstream_handler, file_handler, general_handler, meilisearch_handler,
+    oauth_handler, password_handler, rate_limit_handler, report_handler, session_handler,
+    system_handler, token_handler, totp_handler, turnstile_handler, user_handler, worker_handler,
 };
 use axum::Json;
 use axum::http::StatusCode;
 use axum::response::{IntoResponse, Response};
+use futari_config::ServerConfig;
 use sea_orm::{DbErr, TransactionError};
 use serde::Serialize;
 use tracing::error;
 use utoipa::ToSchema;
-use futari_config::ServerConfig;
 
 pub type ServiceResult<T> = Result<T, Errors>;
 
@@ -219,8 +217,6 @@ impl IntoResponse for Errors {
                 (StatusCode::INTERNAL_SERVER_ERROR, "UNKNOWN_ERROR", None)
             });
 
-        // 5xx 서버 에러는 프로덕션에서 details 숨김 (내부 구현 노출 방지)
-        // 4xx 클라이언트 에러는 항상 details 표시 (유저가 원인을 알아야 함)
         let details = if status.is_server_error() && !ServerConfig::get().is_dev {
             None
         } else {

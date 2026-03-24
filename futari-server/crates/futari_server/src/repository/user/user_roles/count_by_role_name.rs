@@ -1,10 +1,9 @@
 use chrono::Utc;
-use sea_orm::{ColumnTrait, ConnectionTrait, EntityTrait, ExprTrait, PaginatorTrait, QueryFilter};
 use futari_entity::common::Role;
 use futari_entity::user_roles::{Column, Entity};
 use futari_errors::errors::Errors;
+use sea_orm::{ColumnTrait, ConnectionTrait, EntityTrait, ExprTrait, PaginatorTrait, QueryFilter};
 
-/// 특정 역할에 할당된 활성 사용자 수 조회
 pub async fn repository_count_active_user_roles_by_role_name<C>(
     conn: &C,
     role: Role,

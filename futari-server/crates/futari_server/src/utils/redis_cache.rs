@@ -1,7 +1,7 @@
+use futari_errors::errors::Errors;
 use redis::AsyncCommands;
 use redis::aio::ConnectionManager as RedisClient;
 use serde::{Serialize, de::DeserializeOwned};
-use futari_errors::errors::Errors;
 
 /// Cache a JSON-serialized value in Redis with TTL
 pub async fn set_json_with_ttl<T: Serialize>(

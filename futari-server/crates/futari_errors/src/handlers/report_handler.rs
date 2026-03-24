@@ -22,6 +22,6 @@ pub fn map_response(error: &Errors) -> Option<(StatusCode, &'static str, Option<
         }
         Errors::ReportAlreadyExists => Some((StatusCode::CONFLICT, REPORT_ALREADY_EXISTS, None)),
 
-        _ => None, // 다른 도메인의 에러는 None 반환
+        _ => None,
     }
 }

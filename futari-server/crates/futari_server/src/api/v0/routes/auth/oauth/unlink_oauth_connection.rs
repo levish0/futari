@@ -7,7 +7,6 @@ use futari_dto::oauth::request::unlink::UnlinkOAuthRequest;
 use futari_dto::validator::json_validator::ValidatedJson;
 use futari_errors::errors::{ErrorResponse, Errors};
 
-/// OAuth 연결을 해제합니다.
 #[utoipa::path(
     post,
     path = "/v0/auth/oauth/connections/unlink",

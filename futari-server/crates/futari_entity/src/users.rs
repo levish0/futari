@@ -23,13 +23,10 @@ pub struct Model {
     #[sea_orm(column_type = "Text", nullable)]
     pub banner_image: Option<String>,
     // TOTP 2FA
-    /// TOTP secret (Base32 인코딩)
     #[sea_orm(column_type = "Text", nullable)]
     pub totp_secret: Option<String>,
-    /// TOTP 활성화 시각 (None = 비활성화)
     #[sea_orm(column_type = "TimestampWithTimeZone", nullable)]
     pub totp_enabled_at: Option<DateTimeUtc>,
-    /// TOTP 백업 코드 (10개, 평문)
     #[sea_orm(nullable)]
     pub totp_backup_codes: Option<Vec<String>>,
     #[sea_orm(column_type = "TimestampWithTimeZone", not_null)]

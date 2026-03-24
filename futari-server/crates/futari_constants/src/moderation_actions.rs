@@ -3,10 +3,10 @@ use std::fmt;
 use std::str::FromStr;
 use utoipa::ToSchema;
 
-/// Moderation Action enum (moderation_logs.action 필드에 저장됨)
-/// 포맷: "{resource}:{operation}"
+/// Moderation actions stored in `moderation_logs.action`.
+/// Format: `{resource}:{operation}`.
 ///
-/// 관리자/중재자의 제재·관리 행동을 기록
+/// These values represent moderator and administrator actions.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, ToSchema)]
 pub enum ModerationAction {
     // ==================== User Actions ====================
@@ -14,6 +14,10 @@ pub enum ModerationAction {
     UserBan,
     #[serde(rename = "user:unban")]
     UserUnban,
+    #[serde(rename = "user:grant_role")]
+    UserGrantRole,
+    #[serde(rename = "user:revoke_role")]
+    UserRevokeRole,
     #[serde(rename = "user:warn")]
     UserWarn,
     // ==================== Post Actions ====================
@@ -38,6 +42,8 @@ impl ModerationAction {
             // User
             ModerationAction::UserBan => "user:ban",
             ModerationAction::UserUnban => "user:unban",
+            ModerationAction::UserGrantRole => "user:grant_role",
+            ModerationAction::UserRevokeRole => "user:revoke_role",
             ModerationAction::UserWarn => "user:warn",
             // Post
             ModerationAction::PostDelete => "post:delete",
@@ -65,6 +71,8 @@ impl FromStr for ModerationAction {
             // User
             "user:ban" => Ok(ModerationAction::UserBan),
             "user:unban" => Ok(ModerationAction::UserUnban),
+            "user:grant_role" => Ok(ModerationAction::UserGrantRole),
+            "user:revoke_role" => Ok(ModerationAction::UserRevokeRole),
             "user:warn" => Ok(ModerationAction::UserWarn),
             // Post
             "post:delete" => Ok(ModerationAction::PostDelete),
@@ -79,12 +87,12 @@ impl FromStr for ModerationAction {
     }
 }
 
-/// Convert ModerationAction to String for DB storage
+/// Convert a moderation action to its stored string form.
 pub fn moderation_action_to_string(action: ModerationAction) -> String {
     action.as_str().to_string()
 }
 
-/// Convert String from DB to ModerationAction
+/// Parse a moderation action from its stored string form.
 pub fn string_to_moderation_action(s: &str) -> Option<ModerationAction> {
     s.parse().ok()
 }

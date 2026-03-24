@@ -1,8 +1,8 @@
 use super::health::openapi::HealthApiDoc;
 use super::v0::routes::openapi::V0ApiDoc;
+use futari_errors::errors::ErrorResponse;
 use utoipa::openapi::security::{ApiKey, ApiKeyValue, SecurityScheme};
 use utoipa::{Modify, OpenApi};
-use futari_errors::errors::ErrorResponse;
 
 #[derive(OpenApi)]
 #[openapi(

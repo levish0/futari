@@ -1,8 +1,7 @@
-use sea_orm::{ActiveModelTrait, ConnectionTrait, Set};
 use futari_entity::users::{ActiveModel as UserActiveModel, Model as UserModel};
 use futari_errors::errors::Errors;
+use sea_orm::{ActiveModelTrait, ConnectionTrait, Set};
 
-/// OAuth를 통한 새 유저 생성 (비밀번호 없음)
 pub async fn repository_create_oauth_user<C>(
     conn: &C,
     email: &str,

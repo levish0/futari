@@ -20,18 +20,14 @@ impl MigrationTrait for Migration {
                             .default(Expr::cust("uuidv7()")),
                     )
                     .col(ColumnDef::new(Posts::UserId).uuid().not_null())
-                    // 일반 포스트·인용 리포스트는 content 필수, 순수 리포스트는 NULL
                     .col(ColumnDef::new(Posts::Content).text().null())
                     .col(
                         ColumnDef::new(Posts::MediaUrls)
                             .array(ColumnType::Text)
                             .null(),
                     )
-                    // 리포스트(RT): 원본 포스트 참조, content NULL
                     .col(ColumnDef::new(Posts::RepostOfId).uuid().null())
-                    // 인용 리포스트(QRT): 원본 포스트 참조 + content 필수
                     .col(ColumnDef::new(Posts::QuoteOfId).uuid().null())
-                    // 비정규화 카운터
                     .col(
                         ColumnDef::new(Posts::LikeCount)
                             .integer()
@@ -83,7 +79,6 @@ impl MigrationTrait for Migration {
                             .to(Posts::Table, Posts::Id)
                             .on_delete(ForeignKeyAction::SetNull),
                     )
-                    // 리포스트와 인용은 동시에 불가, content가 없으면 반드시 리포스트
                     .check(Expr::cust(
                         "NOT (repost_of_id IS NOT NULL AND quote_of_id IS NOT NULL)",
                     ))
@@ -94,7 +89,6 @@ impl MigrationTrait for Migration {
             )
             .await?;
 
-        // 유저별 타임라인 — UUIDv7 ID로 시간순 정렬
         // Supports: WHERE user_id = ? ORDER BY id DESC
         manager
             .create_index(
@@ -107,7 +101,6 @@ impl MigrationTrait for Migration {
             )
             .await?;
 
-        // 리포스트 원본 조회
         manager
             .create_index(
                 Index::create()
@@ -119,7 +112,6 @@ impl MigrationTrait for Migration {
             )
             .await?;
 
-        // 인용 리포스트 원본 조회
         manager
             .create_index(
                 Index::create()

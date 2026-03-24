@@ -1,8 +1,8 @@
-use utoipa::OpenApi;
 use futari_dto::user_preferences::{
     PreferenceItem, SetUserPreferenceRequest, SetUserPreferencesBulkRequest,
     UserPreferenceResponse, UserPreferencesResponse,
 };
+use utoipa::OpenApi;
 
 #[derive(OpenApi)]
 #[openapi(

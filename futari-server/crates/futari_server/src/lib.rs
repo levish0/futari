@@ -1,10 +1,11 @@
+pub mod api;
+pub mod bridge;
 pub mod connection;
 pub mod eventstream;
 pub mod extractors;
+pub mod middleware;
+pub mod permission;
+pub mod repository;
+pub mod service;
 pub mod state;
 pub mod utils;
-pub mod bridge;
-pub mod service;
-pub mod repository;
-pub mod middleware;
-pub mod api;

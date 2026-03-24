@@ -1,11 +1,10 @@
-use sea_orm::{ActiveModelTrait, ConnectionTrait, Set};
-use tracing::error;
-use uuid::Uuid;
 use futari_entity::common::OAuthProvider;
 use futari_entity::user_oauth_connections::ActiveModel as OAuthConnectionActiveModel;
 use futari_errors::errors::Errors;
+use sea_orm::{ActiveModelTrait, ConnectionTrait, Set};
+use tracing::error;
+use uuid::Uuid;
 
-/// OAuth 연결 생성
 pub async fn repository_create_oauth_connection<C>(
     conn: &C,
     user_id: &Uuid,

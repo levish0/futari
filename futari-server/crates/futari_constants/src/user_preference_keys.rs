@@ -10,22 +10,20 @@ use utoipa::ToSchema;
 pub enum UserPreferenceKey {
     /// Theme: "light" | "dark" | "system"
     #[serde(rename = "theme")]
-    Theme
+    Theme,
 }
 
 impl UserPreferenceKey {
     /// Convert to database string value
     pub fn as_str(&self) -> &'static str {
         match self {
-            UserPreferenceKey::Theme => "theme"
+            UserPreferenceKey::Theme => "theme",
         }
     }
 
     /// Get all preference keys
     pub fn all() -> &'static [UserPreferenceKey] {
-        &[
-            UserPreferenceKey::Theme,
-        ]
+        &[UserPreferenceKey::Theme]
     }
 }
 

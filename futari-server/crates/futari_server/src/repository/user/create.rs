@@ -1,19 +1,14 @@
-use sea_orm::{ActiveModelTrait, ConnectionTrait, Set};
 use futari_entity::users::{ActiveModel as UserActiveModel, Model as UserModel};
 use futari_errors::errors::Errors;
+use sea_orm::{ActiveModelTrait, ConnectionTrait, Set};
 
 use crate::utils::crypto::password::hash_password;
 
-/// 사용자 레코드를 생성한다.
 ///
-/// # 역할
-/// 입력 비밀번호를 해시한 뒤 기본 사용자 레코드를 insert 한다.
 ///
-/// # 연계
 /// - `service_create_user`
 ///
 /// # Errors
-/// - 비밀번호 해시 실패 또는 insert 실패 시 에러를 반환한다.
 pub async fn repository_create_user<C>(
     conn: &C,
     email: String,

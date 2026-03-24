@@ -4,9 +4,6 @@ use uuid::Uuid;
 use super::common::Role;
 use super::users::Entity as UsersEntity;
 
-/// 사용자-역할 매핑 (다중 역할 지원)
-/// Everyone/User는 암시적 역할 (session 유무로 판별), 이 테이블에 저장하지 않음
-/// 명시적 역할만 저장: mod, admin
 #[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel)]
 #[sea_orm(table_name = "user_roles")]
 pub struct Model {

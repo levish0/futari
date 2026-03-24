@@ -1,8 +1,8 @@
 use axum::extract::FromRequestParts;
 use axum::http::request::Parts;
 use axum_extra::extract::Query;
-use serde::de::DeserializeOwned;
 use futari_errors::errors::Errors;
+use serde::de::DeserializeOwned;
 use validator::Validate;
 
 #[derive(Debug, Clone, Copy, Default)]

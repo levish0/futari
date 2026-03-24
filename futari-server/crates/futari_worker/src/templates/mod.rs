@@ -9,7 +9,6 @@ const EMAIL_VERIFICATION_MJML: &str = include_str!("email_verification.mjml");
 const RESET_PASSWORD_MJML: &str = include_str!("reset_password.mjml");
 const EMAIL_CHANGE_MJML: &str = include_str!("email_change.mjml");
 
-/// Pre-rendered HTML templates (MJML → HTML conversion cached)
 static EMAIL_VERIFICATION_HTML: LazyLock<String> = LazyLock::new(|| {
     mjml_to_html(EMAIL_VERIFICATION_MJML).expect("Failed to parse email verification template")
 });

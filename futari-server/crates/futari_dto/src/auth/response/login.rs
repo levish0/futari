@@ -28,8 +28,6 @@ pub fn create_login_response(session_id: String, remember_me: bool) -> Result<Re
         cookie_builder = cookie_builder.domain(domain);
     }
 
-    // remember_me=true: persistent cookie (최대 세션 수명)
-    // remember_me=false: session cookie (브라우저 닫으면 삭제)
     if remember_me {
         cookie_builder =
             cookie_builder.max_age(Duration::hours(config.auth_session_max_lifetime_hours));

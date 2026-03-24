@@ -3,9 +3,9 @@ use std::sync::Arc;
 use tokio::sync::broadcast;
 
 use crate::connection::{MeilisearchClient, R2AssetsClient};
+use futari_dto::action_logs::ActionLogResponse;
 use reqwest::Client as HttpClient;
 use sea_orm::DatabaseConnection as PostgresqlClient;
-use futari_dto::action_logs::ActionLogResponse;
 
 /// JetStream context for publishing jobs to NATS
 pub type WorkerClient = Arc<async_nats::jetstream::Context>;

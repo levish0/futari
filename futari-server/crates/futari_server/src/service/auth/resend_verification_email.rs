@@ -3,9 +3,9 @@ use crate::service::auth::verify_email::{
     find_pending_email_signup_by_email, get_pending_signup_remaining_minutes,
 };
 use crate::state::WorkerClient;
+use futari_errors::errors::ServiceResult;
 use redis::aio::ConnectionManager;
 use tracing::info;
-use futari_errors::errors::ServiceResult;
 
 /// Resend a verification email for a pending email/password signup.
 ///

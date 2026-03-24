@@ -2,11 +2,11 @@ use crate::jobs::WorkerContext;
 use crate::nats::consumer::NatsConsumer;
 use crate::nats::streams::{INDEX_USER_CONSUMER, INDEX_USER_STREAM};
 use crate::{DbPool, SearchClient};
+use futari_entity::users;
 use sea_orm::EntityTrait;
 use serde::{Deserialize, Serialize};
 use serde_json::{Value as JsonValue, json};
 use uuid::Uuid;
-use futari_entity::users;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 /// Worker job payload for index user job.

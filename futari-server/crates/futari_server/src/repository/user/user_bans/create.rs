@@ -1,11 +1,9 @@
 use chrono::{DateTime, Utc};
-use sea_orm::{ActiveModelTrait, ConnectionTrait, Set};
-use uuid::Uuid;
 use futari_entity::user_bans::{ActiveModel, Model};
 use futari_errors::errors::Errors;
+use sea_orm::{ActiveModelTrait, ConnectionTrait, Set};
+use uuid::Uuid;
 
-/// 사용자 차단
-/// expires_at = None → 영구 차단
 pub async fn repository_create_user_ban<C>(
     conn: &C,
     user_id: Uuid,
