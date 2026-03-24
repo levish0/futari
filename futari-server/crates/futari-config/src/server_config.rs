@@ -257,8 +257,6 @@ static CONFIG: LazyLock<ServerConfig> = LazyLock::new(|| {
         // R2 Assets (public bucket)
         r2_assets_public_domain,
         r2_assets_bucket_name,
-        // R2 Revision (private bucket)
-        r2_revision_bucket_name,
 
         // Cloudflare Turnstile
         turnstile_secret_key,
@@ -294,9 +292,6 @@ static CONFIG: LazyLock<ServerConfig> = LazyLock::new(|| {
 
         server_host,
         server_port,
-
-        wiki_parser_host: env::var("WIKI_PARSER_HOST").unwrap_or_else(|_| "127.0.0.1".to_string()),
-        wiki_parser_port: env::var("WIKI_PARSER_PORT").unwrap_or_else(|_| "9000".to_string()),
 
         // NATS
         nats_url: env::var("NATS_URL").unwrap_or_else(|_| "nats://localhost:4222".to_string()),
