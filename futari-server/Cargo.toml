@@ -1,6 +1,23 @@
-[package]
-name = "futari-server"
+[workspace]
+resolver = "3"
+members = ["crates/*"]
+
+[workspace.package]
 version = "0.1.0"
 edition = "2024"
+authors = ["Levi Laine <shiueo.csh@gmail.com>"]
+repository = "https://github.com/levish0/futari"
+rust-version = "1.93.0"
+description = "futari-server"
 
-[dependencies]
+
+[workspace.dependencies]
+# Internal crates
+
+# External dependencies
+tokio = { version = "1.50.0", features = ["full"] }
+axum = { version = "0.8.8", features = ["multipart", "macros"] }
+axum-extra = { version = "0.12.5", features = ["typed-header", "query"] }
+tower = { version = "0.5.3", features = ["timeout", "limit", "buffer"] }
+tower-http = { version = "0.6.8", features = ["cors", "auth", "trace", "request-id"] }
+tower-cookies = "0.11.0"
