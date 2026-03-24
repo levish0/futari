@@ -67,13 +67,9 @@ pub async fn service_totp_verify(
 
     txn.commit().await?;
 
-    let session = SessionService::create_session(
-        redis,
-        token_data.user_id.to_string(),
-        token_data.user_agent,
-        token_data.ip_address,
-    )
-    .await?;
+    let session =
+        SessionService::create_session(redis, token_data.user_id.to_string(), token_data.user_agent)
+            .await?;
 
     info!(user_id = %token_data.user_id, "TOTP verified");
 

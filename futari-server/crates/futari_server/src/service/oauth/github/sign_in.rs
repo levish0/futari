@@ -23,7 +23,6 @@ pub async fn service_github_sign_in<C>(
     state: &str,
     anonymous_user_id: &str,
     user_agent: Option<String>,
-    ip_address: Option<String>,
 ) -> ServiceResult<SignInResult>
 where
     C: ConnectionTrait,
@@ -71,7 +70,6 @@ where
             redis_conn,
             existing_user.id.to_string(),
             user_agent,
-            ip_address,
         )
         .await?;
 

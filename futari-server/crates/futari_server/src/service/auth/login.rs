@@ -30,7 +30,6 @@ pub async fn service_login(
     redis: &ConnectionManager,
     payload: LoginRequest,
     user_agent: Option<String>,
-    ip_address: Option<String>,
 ) -> ServiceResult<LoginResult> {
     let user = repository_find_user_by_email(db, payload.email.clone())
         .await?
@@ -40,16 +39,14 @@ pub async fn service_login(
     verify_password(&payload.password, &password_hash).map_err(|_| Errors::InvalidCredentials)?;
 
     if user.totp_enabled_at.is_some() {
-        let temp_token =
-            TotpTempToken::create(redis, user.id, user_agent, ip_address, payload.remember_me)
-                .await?;
+        let temp_token = TotpTempToken::create(redis, user.id, user_agent, payload.remember_me)
+            .await?;
 
         info!(user_id = %user.id, "Login requires TOTP");
         return Ok(LoginResult::TotpRequired(temp_token.token));
     }
 
-    let session =
-        SessionService::create_session(redis, user.id.to_string(), user_agent, ip_address).await?;
+    let session = SessionService::create_session(redis, user.id.to_string(), user_agent).await?;
 
     info!(user_id = %user.id, "Login successful");
 

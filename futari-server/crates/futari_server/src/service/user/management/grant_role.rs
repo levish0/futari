@@ -29,10 +29,8 @@ pub async fn service_grant_role(
     expires_at: Option<DateTime<Utc>>,
     reason: String,
     session: &SessionContext,
-    ip_address: &str,
 ) -> ServiceResult<GrantRoleResponse> {
-    PermissionService::require_admin_for_target(db, Some(session), ip_address, target_user_id)
-        .await?;
+    PermissionService::require_admin_for_target(db, Some(session), target_user_id).await?;
 
     let txn = db.begin().await?;
 

@@ -78,7 +78,6 @@ impl SessionService {
         redis: &RedisClient,
         user_id: String,
         user_agent: Option<String>,
-        ip_address: Option<String>,
     ) -> Result<Session, Errors> {
         let config = ServerConfig::get();
         let session = Session::new(
@@ -86,7 +85,7 @@ impl SessionService {
             config.auth_session_sliding_ttl_hours,
             config.auth_session_max_lifetime_hours,
         )
-        .with_client_info(user_agent, ip_address);
+        .with_user_agent(user_agent);
 
         // Redis TTL = sliding TTL.
         let ttl_seconds = (config.auth_session_sliding_ttl_hours * 3600) as u64;

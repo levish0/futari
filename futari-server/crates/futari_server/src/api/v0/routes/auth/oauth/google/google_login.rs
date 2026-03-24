@@ -1,12 +1,10 @@
 use crate::middleware::anonymous_user::AnonymousUserContext;
 use crate::service::oauth::google::service_google_sign_in;
 use crate::state::AppState;
-use crate::utils::extract::extract_ip_address::extract_ip_address;
 use crate::utils::extract::extract_user_agent::extract_user_agent;
 use axum::Extension;
 use axum::{
-    extract::{ConnectInfo, State},
-    http::HeaderMap,
+    extract::State,
     response::Response,
 };
 use axum_extra::{TypedHeader, headers::UserAgent};
@@ -14,7 +12,6 @@ use futari_dto::oauth::request::google::GoogleLoginRequest;
 use futari_dto::oauth::response::{OAuthPendingSignupResponse, OAuthSignInResponse};
 use futari_dto::validator::json_validator::ValidatedJson;
 use futari_errors::errors::{ErrorResponse, Errors};
-use std::net::SocketAddr;
 
 ///
 #[utoipa::path(
@@ -32,14 +29,11 @@ use std::net::SocketAddr;
 )]
 pub async fn auth_google_login(
     user_agent: Option<TypedHeader<UserAgent>>,
-    headers: HeaderMap,
-    ConnectInfo(addr): ConnectInfo<SocketAddr>,
     State(state): State<AppState>,
     Extension(anonymous): Extension<AnonymousUserContext>,
     ValidatedJson(payload): ValidatedJson<GoogleLoginRequest>,
 ) -> Result<Response, Errors> {
     let user_agent_str = extract_user_agent(user_agent);
-    let ip_address = extract_ip_address(&headers, addr);
 
     let result = service_google_sign_in(
         &state.db,
@@ -49,7 +43,6 @@ pub async fn auth_google_login(
         &payload.state,
         &anonymous.anonymous_user_id,
         Some(user_agent_str),
-        Some(ip_address),
     )
     .await?;
 

@@ -1,14 +1,11 @@
 use crate::extractors::RequiredSession;
 use crate::service::user::management::ban_user::service_ban_user;
 use crate::state::AppState;
-use crate::utils::extract::extract_ip_address::extract_ip_address;
-use axum::extract::{ConnectInfo, State};
-use axum::http::HeaderMap;
+use axum::extract::State;
 use futari_dto::user::request::BanUserRequest;
 use futari_dto::user::response::BanUserResponse;
 use futari_dto::validator::json_validator::ValidatedJson;
 use futari_errors::errors::{ErrorResponse, Errors};
-use std::net::SocketAddr;
 
 #[utoipa::path(
     post,
@@ -29,21 +26,9 @@ use std::net::SocketAddr;
     tag = "User Management"
 )]
 pub async fn ban_user(
-    headers: HeaderMap,
-    ConnectInfo(addr): ConnectInfo<SocketAddr>,
     State(state): State<AppState>,
     RequiredSession(session): RequiredSession,
     ValidatedJson(payload): ValidatedJson<BanUserRequest>,
 ) -> Result<BanUserResponse, Errors> {
-    let ip_address = extract_ip_address(&headers, addr);
-
-    service_ban_user(
-        &state.db,
-        payload.user_id,
-        payload.expires_at,
-        payload.reason,
-        &session,
-        &ip_address,
-    )
-    .await
+    service_ban_user(&state.db, payload.user_id, payload.expires_at, payload.reason, &session).await
 }

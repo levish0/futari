@@ -13,7 +13,6 @@ pub struct TotpTempToken {
     pub token: String,
     pub user_id: Uuid,
     pub user_agent: Option<String>,
-    pub ip_address: Option<String>,
     pub remember_me: bool,
     pub created_at: DateTime<Utc>,
 }
@@ -23,7 +22,6 @@ impl TotpTempToken {
     pub fn new(
         user_id: Uuid,
         user_agent: Option<String>,
-        ip_address: Option<String>,
         remember_me: bool,
     ) -> Self {
         let mut bytes = [0u8; 32];
@@ -34,7 +32,6 @@ impl TotpTempToken {
             token,
             user_id,
             user_agent,
-            ip_address,
             remember_me,
             created_at: Utc::now(),
         }
@@ -48,10 +45,9 @@ impl TotpTempToken {
         redis: &RedisClient,
         user_id: Uuid,
         user_agent: Option<String>,
-        ip_address: Option<String>,
         remember_me: bool,
     ) -> Result<Self, Errors> {
-        let temp_token = Self::new(user_id, user_agent, ip_address, remember_me);
+        let temp_token = Self::new(user_id, user_agent, remember_me);
 
         set_json_with_ttl(
             redis,

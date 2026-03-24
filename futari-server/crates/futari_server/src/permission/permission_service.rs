@@ -47,7 +47,6 @@ impl PermissionService {
     pub async fn get_context<C>(
         conn: &C,
         session: Option<&SessionContext>,
-        _ip_address: &str,
     ) -> Result<UserContext, Errors>
     where
         C: ConnectionTrait,
@@ -75,13 +74,12 @@ impl PermissionService {
     pub async fn require_role<C>(
         conn: &C,
         session: Option<&SessionContext>,
-        ip_address: &str,
         role: Role,
     ) -> Result<UserContext, Errors>
     where
         C: ConnectionTrait,
     {
-        let ctx = Self::get_context(conn, session, ip_address).await?;
+        let ctx = Self::get_context(conn, session).await?;
         ctx.require_role(role)?;
         Ok(ctx)
     }
@@ -89,42 +87,40 @@ impl PermissionService {
     pub async fn require_admin_for_target<C>(
         conn: &C,
         session: Option<&SessionContext>,
-        ip_address: &str,
         target_user_id: Uuid,
     ) -> Result<UserContext, Errors>
     where
         C: ConnectionTrait,
     {
-        Self::require_role_for_target(conn, session, ip_address, target_user_id, Role::Admin).await
+        Self::require_role_for_target(conn, session, target_user_id, Role::Admin).await
     }
 
     /// Convenience wrapper for target-scoped moderation gates.
     ///
-    /// Admins also pass this gate because `UserContext::require_role` allows
-    /// admin override for every explicit role check.
+    /// Both moderators and admins pass this gate. `UserContext::require_role`
+    /// only denies actors who are neither admin nor holders of the requested
+    /// role.
     pub async fn require_mod_for_target<C>(
         conn: &C,
         session: Option<&SessionContext>,
-        ip_address: &str,
         target_user_id: Uuid,
     ) -> Result<UserContext, Errors>
     where
         C: ConnectionTrait,
     {
-        Self::require_role_for_target(conn, session, ip_address, target_user_id, Role::Mod).await
+        Self::require_role_for_target(conn, session, target_user_id, Role::Mod).await
     }
 
     async fn require_role_for_target<C>(
         conn: &C,
         session: Option<&SessionContext>,
-        ip_address: &str,
         target_user_id: Uuid,
         role: Role,
     ) -> Result<UserContext, Errors>
     where
         C: ConnectionTrait,
     {
-        let ctx = Self::require_role(conn, session, ip_address, role).await?;
+        let ctx = Self::require_role(conn, session, role).await?;
 
         if let Some(session) = session
             && session.user_id == target_user_id

@@ -1,12 +1,10 @@
 use crate::service::auth::LoginResult;
 use crate::service::auth::login::service_login;
 use crate::state::AppState;
-use crate::utils::extract::extract_ip_address::extract_ip_address;
 use crate::utils::extract::extract_user_agent::extract_user_agent;
-use axum::http::HeaderMap;
 use axum::response::IntoResponse;
 use axum::{
-    extract::{ConnectInfo, State},
+    extract::State,
     response::Response,
 };
 use axum_extra::{TypedHeader, headers::UserAgent};
@@ -15,7 +13,6 @@ use futari_dto::auth::response::TotpRequiredResponse;
 use futari_dto::auth::response::create_login_response;
 use futari_dto::validator::json_validator::ValidatedJson;
 use futari_errors::errors::{ErrorResponse, Errors};
-use std::net::SocketAddr;
 
 #[utoipa::path(
     post,
@@ -33,22 +30,12 @@ use std::net::SocketAddr;
 )]
 pub async fn auth_login(
     user_agent: Option<TypedHeader<UserAgent>>,
-    headers: HeaderMap,
-    ConnectInfo(addr): ConnectInfo<SocketAddr>,
     State(state): State<AppState>,
     ValidatedJson(payload): ValidatedJson<LoginRequest>,
 ) -> Result<Response, Errors> {
     let user_agent = extract_user_agent(user_agent);
-    let ip_address = extract_ip_address(&headers, addr);
-
-    let result = service_login(
-        &state.db,
-        &state.redis_session,
-        payload,
-        Some(user_agent),
-        Some(ip_address),
-    )
-    .await?;
+    let result =
+        service_login(&state.db, &state.redis_session, payload, Some(user_agent)).await?;
 
     match result {
         LoginResult::SessionCreated {

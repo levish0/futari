@@ -1,14 +1,11 @@
 use crate::extractors::RequiredSession;
 use crate::service::user::management::grant_role::service_grant_role;
 use crate::state::AppState;
-use crate::utils::extract::extract_ip_address::extract_ip_address;
-use axum::extract::{ConnectInfo, State};
-use axum::http::HeaderMap;
+use axum::extract::State;
 use futari_dto::user::request::GrantRoleRequest;
 use futari_dto::user::response::GrantRoleResponse;
 use futari_dto::validator::json_validator::ValidatedJson;
 use futari_errors::errors::{ErrorResponse, Errors};
-use std::net::SocketAddr;
 
 #[utoipa::path(
     post,
@@ -29,14 +26,10 @@ use std::net::SocketAddr;
     tag = "User Management"
 )]
 pub async fn grant_role(
-    headers: HeaderMap,
-    ConnectInfo(addr): ConnectInfo<SocketAddr>,
     State(state): State<AppState>,
     RequiredSession(session): RequiredSession,
     ValidatedJson(payload): ValidatedJson<GrantRoleRequest>,
 ) -> Result<GrantRoleResponse, Errors> {
-    let ip_address = extract_ip_address(&headers, addr);
-
     service_grant_role(
         &state.db,
         payload.user_id,
@@ -44,7 +37,6 @@ pub async fn grant_role(
         payload.expires_at,
         payload.reason,
         &session,
-        &ip_address,
     )
     .await
 }

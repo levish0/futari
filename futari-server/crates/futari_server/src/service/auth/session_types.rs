@@ -18,7 +18,6 @@ pub struct Session {
     pub expires_at: DateTime<Utc>,
     pub max_expires_at: DateTime<Utc>,
     pub user_agent: Option<String>,
-    pub ip_address: Option<String>,
 }
 
 impl Session {
@@ -35,18 +34,12 @@ impl Session {
             expires_at,
             max_expires_at,
             user_agent: None,
-            ip_address: None,
         }
     }
 
-    /// Attach optional client metadata to the session payload.
-    pub fn with_client_info(
-        mut self,
-        user_agent: Option<String>,
-        ip_address: Option<String>,
-    ) -> Self {
+    /// Attach an optional user-agent string to the session payload.
+    pub fn with_user_agent(mut self, user_agent: Option<String>) -> Self {
         self.user_agent = user_agent;
-        self.ip_address = ip_address;
         self
     }
 
@@ -88,7 +81,6 @@ mod tests {
             expires_at: now + Duration::hours(expires_in_hours),
             max_expires_at: now + Duration::hours(720),
             user_agent: None,
-            ip_address: None,
         }
     }
 

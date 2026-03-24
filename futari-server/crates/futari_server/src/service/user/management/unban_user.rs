@@ -23,10 +23,8 @@ pub async fn service_unban_user(
     target_user_id: Uuid,
     reason: String,
     session: &SessionContext,
-    ip_address: &str,
 ) -> ServiceResult<UnbanUserResponse> {
-    PermissionService::require_admin_for_target(db, Some(session), ip_address, target_user_id)
-        .await?;
+    PermissionService::require_admin_for_target(db, Some(session), target_user_id).await?;
 
     let txn = db.begin().await?;
 

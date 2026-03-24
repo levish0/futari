@@ -38,7 +38,6 @@ pub async fn service_complete_signup<C>(
     handle: &str,
     anonymous_user_id: &str,
     user_agent: Option<String>,
-    ip_address: Option<String>,
 ) -> ServiceResult<String>
 where
     C: ConnectionTrait + TransactionTrait,
@@ -202,13 +201,9 @@ where
         // 6. Async side effects after commit.
         worker_client::index_user(worker, new_user.id).await.ok();
 
-        let session = SessionService::create_session(
-            redis_conn,
-            new_user.id.to_string(),
-            user_agent,
-            ip_address,
-        )
-        .await?;
+        let session =
+            SessionService::create_session(redis_conn, new_user.id.to_string(), user_agent)
+                .await?;
 
         Ok(session.session_id)
     }
