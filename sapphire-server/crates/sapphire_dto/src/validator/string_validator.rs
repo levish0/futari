@@ -1,3 +1,4 @@
+use unicode_general_category::{GeneralCategory, get_general_category};
 use validator::ValidationError;
 
 /// Validates that a string is not blank (not empty after trimming whitespace)
