@@ -27,6 +27,11 @@ pub async fn publish_job<T: Serialize>(
         .map_err(|e| {
             error!(error = %e, subject, "Worker job publish failed");
             Errors::WorkerServiceConnectionFailed
+        })?
+        .await
+        .map_err(|e| {
+            error!(error = %e, subject, "Worker job ack failed");
+            Errors::WorkerServiceConnectionFailed
         })?;
 
     Ok(())
