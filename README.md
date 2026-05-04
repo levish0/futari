@@ -1,2 +1,2 @@
 # sapphire
-Just words. Between us.
+A deeper blue between us.
