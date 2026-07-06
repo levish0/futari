@@ -49,7 +49,7 @@
 		"prettier-plugin-svelte": "^3.5.1",
 		"prettier-plugin-tailwindcss": "^0.7.2",
 		"runed": "^0.37.1",
-		"svelte": "^5.55.0",
+		"svelte": "^5.55.1",
 		"svelte-check": "^4.4.5",
 		"svelte-easy-crop": "^5.0.1",
 		"svelte-hero-icons": "^5.2.0",
